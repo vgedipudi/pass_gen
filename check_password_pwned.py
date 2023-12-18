@@ -65,6 +65,7 @@ def main():
     if main_heading:
         write_to_file('scraped_content.txt', main_heading)
 
-
+# Ensures script only runs main function when directly executed (e.g., python check_password_pwned.py), 
+# not when imported as a module.
 if __name__ == "__main__":
     main()
