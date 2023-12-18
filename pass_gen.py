@@ -83,7 +83,8 @@ def main():
     a, b, c = tuple_operations()
     print(f"Tuple values: {a}, {b}, {c}")
 
-
+# Ensures script only runs main function when directly executed (e.g., python check_password_pwned.py), 
+# not when imported as a module.
 if __name__ == "__main__":
     main()
 
