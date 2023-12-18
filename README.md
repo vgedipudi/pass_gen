@@ -1,90 +1,55 @@
-# pass_gen.py
-# This script generates passwords and performs various operations using Pandas, lists, tuples, and dictionaries.
+Project Overview: Password Generation and Security Check
 
-import string
-import random
-import pandas as pd
+# Introduction #
+The project comprises two primary Python scripts: pass_gen.py and check_password_pwned.py. 
+It demonstrates a range of programming concepts and techniques, from generating random passwords 
+and handling data with Pandas to web scraping and interacting with an API for security checks. 
+The project provides a practical application of Python in the realm of data manipulation and cyber security, 
+showcasing how scripts can be integrated to form a comprehensive workflow.
 
+# Objectives #
 
-class PasswordGenerator:
-    def __init__(self, length, uppercase_num, symbols_num, numbers_num):
-        self.length = length
-        self.uppercase_num = uppercase_num
-        self.symbols_num = symbols_num
-        self.numbers_num = numbers_num
+    * Password Generation *: Create a set of random passwords with specified criteria for length 
+    and character composition.
 
-    def generate_password(self):
-        # 4.3, 4.4, 4.9
-        if self.length < self.uppercase_num + self.symbols_num + self.numbers_num:
-            raise ValueError("Total number of uppercase, symbols, and numbers should not exceed password length")
+    * Data Manipulation *: Employ Pandas for reading, filtering, and writing data.
 
-        password_characters = random.sample(string.ascii_uppercase, self.uppercase_num) + \
-                              random.sample(string.punctuation, self.symbols_num) + \
-                              random.sample(string.digits, self.numbers_num)
+    * Security Verification *: Check the generated passwords against the "Have I Been Pwned" API to 
+    determine if they have been compromised in known data breaches.
 
-        remaining_chars = self.length - len(password_characters)
-        password_characters += random.sample(string.ascii_lowercase, remaining_chars)
+    * Web Scraping *: Extract data from a simple webpage to demonstrate scraping techniques.
 
-        random.shuffle(password_characters)
-        return ''.join(password_characters)
+    * File Operations *: Read from and write to files for data persistence and result presentation.
 
+# Tools and Libraries Used #
 
-def save_passwords_to_csv(passwords, filename):
-    df = pd.DataFrame(passwords, columns=['Password'])
-    df.to_csv(filename, index=False)
+    * Python *: The primary programming language used for the project.
+    
+    * Pandas *: A powerful Python library for data manipulation and analysis, particularly for working 
+    with structured data like CSV files.
+    
+    * Requests *: A Python HTTP library used to make requests to external URLs, crucial for both the web 
+    scraping and API interaction aspects of the project.
+    
+    * BeautifulSoup *: A library for parsing HTML and XML documents, used here for web scraping.
+    
+    * hashlib *: A Python module providing a secure way to hash passwords.
+    
+    * Standard Python Libraries *: Such as random for generating random elements and string for accessing standard string character sets.
 
+# Project Execution #
 
-def read_and_filter_passwords(filename):
-    # 8_2 Read CSV
-    df = pd.read_csv(filename)
+* pass_gen.py *:
 
-    # 8_3 Subset DataFrame using a boolean
-    filtered_df = df[df['Password'].apply(len) > 12]  # Example: Filter passwords longer than 12 characters
+Generates a set of random passwords based on predefined criteria (length, number of uppercase letters, symbols, and digits).
+Saves these passwords into passwords.csv.
+Reads and filters this CSV file to get a subset of passwords.
+Performs various list, dictionary, and tuple operations to demonstrate Python's data structure manipulation capabilities.
 
-    # 8_4 Write filtered data to CSV
-    filtered_df.to_csv('filtered_passwords.csv', index=False)
+* check_password_pwned.py *:
 
-
-# Example of list and dictionary manipulation
-def list_and_dict_operations():
-    # 5.9, 5.10, 5.11: List operations
-    my_list = []
-    for i in range(5):
-        my_list.append(i)  # Append item to list
-    my_list.remove(3)  # Remove an item
-
-    # 5.15, 5.17, 5.18, 5.19: Dictionary operations
-    my_dict = {'key1': 'value1', 'key2': 'value2'}
-    for key, value in my_dict.items():
-        my_dict[key] = 'new_' + value  # Update values programmatically
-
-
-# 5.12, 5.13, 5.14: Tuple operations
-def tuple_operations():
-    my_tuple = (1, 2, 3)
-    a, b, c = my_tuple  # Assign tuple members to variables
-    return a, b, c
-
-
-# 2.2 Script Description
-# The main function demonstrating the usage of various features.
-def main():
-    # Generate and save passwords
-    passwords = [PasswordGenerator(12, 2, 2, 2).generate_password() for _ in range(20)]
-    save_passwords_to_csv(passwords, 'passwords.csv')
-
-    # Read and filter passwords
-    read_and_filter_passwords('passwords.csv')
-
-    # List and dictionary operations
-    list_and_dict_operations()
-
-    # Tuple operations
-    a, b, c = tuple_operations()
-    print(f"Tuple values: {a}, {b}, {c}")
-
-
-if __name__ == "__main__":
-    main()
-
-
+Reads the generated passwords from passwords.csv.
+Checks each password against the "Have I Been Pwned" API to determine if it has been exposed in a data breach.
+Saves the results of this check to pwned_results.txt.
+Demonstrates basic web scraping by extracting content from a simple webpage (example.com) and saving it to scraped_content.txt.
+This project serves as an educational tool for understanding various Python functionalities and their practical applications, especially in the areas of cybersecurity and data handling.
